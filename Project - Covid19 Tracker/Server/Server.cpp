@@ -1,7 +1,15 @@
 #include "Server.h"
+#include "rapidjson/document.h"
+
+using namespace rapidjson;
 
 int main()
 {
+	ifstream f;
+	f.open("VirusWorld.json", ios::in);
+
+
+
 	// Initialize Winsock
 	WSADATA wsData;
 	WORD ver = MAKEWORD(2, 2);
@@ -94,7 +102,7 @@ int main()
 					cout << "password: " << mess2 << endl;
 				}
 
-				else if (bytesIn == 0 || bytesIn_2 == 0)
+				else if (bytesIn <= 0 || bytesIn_2 <= 0)
 				{
 					cout << ip << " disconnected on port " << ntohs(sock) << endl;
 					// Drop the Client
@@ -104,6 +112,7 @@ int main()
 
 				else
 				{
+					cout << bytesIn << endl;
 					cout << "Error in receiving message" << endl;
 					closesocket(sock);
 					FD_CLR(sock, &master);
