@@ -37,3 +37,93 @@ string getWorldData() {
 
     return result;
 }
+
+bool checkPass(std::string inputname, std::string passkey)
+{
+    std::string k;
+    std::fstream fileUsers(k, std::ios_base::in);
+    if (fileUsers.fail())
+    {
+        std::cout << "File is not existed";
+        return true;
+    }
+    std::string user;
+    std::string username;
+    std::string password;
+    while (!fileUsers.eof())
+    {
+        getline(fileUsers, username, ',');
+        if (username.compare(inputname) == 0)
+        {
+            getline(fileUsers, password);
+            if (password.compare(passkey) == 0)
+            {
+                fileUsers.close();
+                return true;
+            }
+            else
+            {
+                fileUsers.close();
+                return false;
+            }
+        }
+        else
+        {
+            getline(fileUsers, user);
+        }
+    }
+    fileUsers.close();
+    return false;
+}
+
+bool checkExistedUsername(std::string inputname)
+{
+    std::string k;
+    std::fstream fileUsers(k, std::ios_base::in);
+    if (fileUsers.fail())
+    {
+        std::cout << "File is not existed";
+        return true;
+    }
+
+    std::string username;
+    std::string user;
+    while (!fileUsers.eof())
+    {
+        getline(fileUsers, username, ',');
+        if (username.compare(inputname) == 0)
+        {
+            fileUsers.close();
+            return false;
+        }
+        else
+        {
+            getline(fileUsers, user);
+        }
+    }
+    fileUsers.close();
+    return true;
+}
+
+void SaveinUserfile(std::string inputname, std::string passkey)
+{
+    if (checkExistedUsername(inputname) == 0)
+    {
+        std::string k;
+        std::fstream fileUsers(k, std::ios_base::in);
+        fileUsers.seekg(0, ios_base::end);
+        fileUsers << inputname;
+        fileUsers << ',';
+        fileUsers << passkey;
+        fileUsers << endl;
+        fileUsers.close();
+    }
+    else
+    {
+        if (checkPass(inputname, passkey) == 1)
+        {
+            std::cout << "Success";
+        }
+        else std::cout << "Wrong password";
+    }
+}
