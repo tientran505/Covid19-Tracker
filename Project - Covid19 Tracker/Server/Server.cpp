@@ -1,6 +1,7 @@
 #include "Server.h"
 #include "rapidjson/document.h"
 #include <conio.h>
+#include <ctime>
 
 using namespace rapidjson;
 
@@ -148,19 +149,19 @@ int main()
     return 0;
 }
 
-/*
-void main()
+void savefileJson()
 {
-	Document d;
-	string resource=getWorldData();
-	d.Parse(resource.c_str());
-	for (int i = 0; i < d.Size(); i++)
-	{
-		cout << d[i]["country"].GetString() << endl;
-		cout << d[i]["cases"].GetInt64() << endl;
-	}
+	// current date/time based on current system
+	time_t now = time(0);
+
+	tm* ltm = localtime(&now);
+
+	string savefileName;
+	savefileName = to_string(ltm->tm_mday) + "-" + to_string(1 + ltm->tm_mon) + "-" + to_string(1900+ltm->tm_year)+".txt";
+	fstream fileSave(savefileName, ios_base::out);
+	fileSave << getWorldData();
 }
-*/
+
 //withdraw an account
 void eraseAccount(string inputname)
 {
