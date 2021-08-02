@@ -37,3 +37,20 @@ string getWorldData() {
 
     return result;
 }
+
+
+void savefileJson()
+{
+    // current date/time based on current system
+    time_t now = time(0);
+
+    tm* ltm = localtime(&now);
+
+    string savefileName;
+    savefileName = to_string(ltm->tm_mday) + "-" + to_string(1 + ltm->tm_mon) + "-" + to_string(1900 + ltm->tm_year) + ".txt";
+    fstream fileSave(savefileName, ios_base::out);
+    fileSave << getWorldData();
+    fileSave.close();
+}
+
+

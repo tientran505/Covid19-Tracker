@@ -7,10 +7,20 @@
 #include <iostream>
 #include <WS2tcpip.h>
 #include <string>
+#include <msclr/marshal_cppstd.h>
+#include <fstream>
+
 #pragma comment (lib, "ws2_32.lib")
 
 using namespace std;
 
-int createSocket(string IP, int Port);
+static string IP = "";
+static int portNum = 2;
+
+SOCKET createSocket(string IPNum, int Port);
+bool canCreateSocket(string IPNum, int& Port);
+static SOCKET clientSocket;
+bool checkLogin(string username, string pass);
+static int a = 3;
 
 #endif // !_CLIENT_H_

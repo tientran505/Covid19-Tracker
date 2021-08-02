@@ -1,7 +1,6 @@
 #pragma once
-#include "Client_Source.h"
-#include <msclr/marshal_cppstd.h>
 #include "LoginFrom_Client.h"
+#include "Client_Source.h"
 
 namespace ClientGUI {
 
@@ -44,6 +43,7 @@ namespace ClientGUI {
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::TextBox^ textBox3;
 	protected:
 
 	private:
@@ -66,6 +66,7 @@ namespace ClientGUI {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
 			// textBox1
@@ -106,6 +107,7 @@ namespace ClientGUI {
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(121, 35);
 			this->textBox2->TabIndex = 3;
+			this->textBox2->KeyDown += gcnew System::Windows::Forms::KeyEventHandler(this, &MyForm_Client::textBox2_KeyDown);
 			// 
 			// button1
 			// 
@@ -137,11 +139,20 @@ namespace ClientGUI {
 			this->label3->TabIndex = 6;
 			this->label3->Text = L"Enter Information of Server to connect!";
 			// 
+			// textBox3
+			// 
+			this->textBox3->Location = System::Drawing::Point(294, 151);
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(100, 20);
+			this->textBox3->TabIndex = 7;
+			this->textBox3->TextChanged += gcnew System::EventHandler(this, &MyForm_Client::textBox3_TextChanged);
+			// 
 			// MyForm_Client
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(428, 317);
+			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
@@ -166,17 +177,22 @@ private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e)
 private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
-	string IP = msclr::interop::marshal_as<string>(textBox1->Text);
-	int portNum = System::Convert::ToInt64(textBox2->Text);
-	if (createSocket(IP, portNum) != 1) {
-		MessageBox::Show("Connect to Server successful", "Connected", MessageBoxButtons::OK);
-
-		LoginFrom_Client^ loginForm = gcnew LoginFrom_Client;
-		loginForm->Show();
-	}
-	else MessageBox::Show("Cant' connect to Server. Try again" , "Error", MessageBoxButtons::OK, MessageBoxIcon::Error);
+	IP = msclr::interop::marshal_as<string>(textBox1->Text);
+	portNum = System::Convert::ToInt64(textBox2->Text);
+	
+	LoginFrom_Client^ loginForm = gcnew LoginFrom_Client(IP, portNum);
+	loginForm->Show();
 }
+
 private: System::Void MyForm_Client_Load(System::Object^ sender, System::EventArgs^ e) {
+}
+
+private: System::Void textBox2_KeyDown(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+	if (e->KeyValue == (int)Keys::Enter) {
+		button1->PerformClick();
+	}
+}
+private: System::Void textBox3_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 }
 };
 }

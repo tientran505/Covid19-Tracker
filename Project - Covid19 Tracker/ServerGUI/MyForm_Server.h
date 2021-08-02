@@ -1,4 +1,5 @@
 #pragma once
+#include "Server_Source.h"
 
 namespace ServerGUI {
 
@@ -18,9 +19,7 @@ namespace ServerGUI {
 		MyForm_Server(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+			
 		}
 
 	protected:
@@ -34,6 +33,9 @@ namespace ServerGUI {
 				delete components;
 			}
 		}
+	private: System::Windows::Forms::Label^ label1;
+	protected:
+	private: System::Windows::Forms::Label^ label2;
 
 	private:
 		/// <summary>
@@ -48,12 +50,47 @@ namespace ServerGUI {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"MyForm_Server";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->SuspendLayout();
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label1->Location = System::Drawing::Point(245, 26);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(153, 20);
+			this->label1->TabIndex = 0;
+			this->label1->Text = L"Server management";
+			this->label1->TextAlign = System::Drawing::ContentAlignment::TopCenter;
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 12));
+			this->label2->Location = System::Drawing::Point(12, 51);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(104, 20);
+			this->label2->TabIndex = 1;
+			this->label2->Text = L"Client Status:";
+			// 
+			// MyForm_Server
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(623, 373);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->label1);
+			this->Name = L"MyForm_Server";
+			this->Text = L"MyForm_Server";
+			this->Load += gcnew System::EventHandler(this, &MyForm_Server::MyForm_Server_Load);
+			this->ResumeLayout(false);
+			this->PerformLayout();
+
 		}
 #pragma endregion
+	private: System::Void MyForm_Server_Load(System::Object^ sender, System::EventArgs^ e) {
+	}
 	};
 }
