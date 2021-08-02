@@ -1,5 +1,7 @@
 #include "Server.h"
 #include "rapidjson/document.h"
+#include <conio.h>
+#include <ctime>
 
 using namespace rapidjson;
 
@@ -212,6 +214,23 @@ int main()
 		}
 	}
 	
+	
+
+	//shutdown all client
+	fd_set copy = master;
+	int socketCount = select(0, &copy, nullptr, nullptr, nullptr);
+	for (int i = 0; i < socketCount; i++)
+	{
+		SOCKET sock = copy.fd_array[i];
+		int iResult = shutdown(sock, SD_SEND);
+		if (iResult == SOCKET_ERROR)
+		{
+			cout << "Shutdown failed" << WSAGetLastError();
+			closesocket(sock);
+			return 1;
+		}
+	}
+
 	WSACleanup();
 	closesocket(master);
 
@@ -288,23 +307,46 @@ SOCKET createSocket(string IP, int portNum)
 	return master;
 }
 
+void savefileJson()
+{
+	// current date/time based on current system
+	time_t now = time(0);
+
+	tm* ltm = localtime(&now);
+
+	string savefileName;
+	savefileName = to_string(ltm->tm_mday) + "-" + to_string(1 + ltm->tm_mon) + "-" + to_string(1900+ltm->tm_year)+".txt";
+	fstream fileSave(savefileName, ios_base::out);
+	fileSave << getWorldData();
+}
+
 //withdraw an account
 void eraseAccount(string inputname)
 {
 	fstream fileUsers("abc.txt", ios_base::in);
 	fstream fileSave("bcd.txt", ios_base::in);
 	std::string username;
+
 	std::string password;
 	while (!fileUsers.eof())
 	{
 		getline(fileUsers, username, ',');
 		if (username.compare(inputname) == 0)
 		{
+
+    std::string password;
+    while (!fileUsers.eof())
+    {
+        getline(fileUsers, username, ',');
+        if (username.compare(inputname) == 0)
+        {
+
 			getline(fileUsers, password);
 			getline(fileUsers, username, ',');
 			fileSave << username << ',';
 			getline(fileUsers, password);
 			fileSave << password << '\n';
+
 		}
 		else
 		{
@@ -313,11 +355,20 @@ void eraseAccount(string inputname)
 			fileSave << password << '\n';
 		}
 	}
+        }
+        else
+        {
+			fileSave << username << ',';
+            getline(fileUsers, password);
+			fileSave << password << '\n';
+        }
+    }
 	fileUsers.close();
 	fileSave.close();
 	remove("abc.txt");
 	rename("bcd.txt", "abc.txt");
 }
+
 
 bool checkExistedUsername(std::string inputname)
 {
@@ -388,4 +439,18 @@ void SaveinUserfile(std::string inputname, std::string passkey)
 	std::fstream fileUsers("Account.txt", std::ios_base::out | std::ios_base::app);
 	fileUsers << endl << inputname << "," << passkey;
 	fileUsers.close();
+}
+
+
+void closeport(u_short portnum, fd_set clientlist, int &socketCount)
+{
+	for (int i = 0; i < socketCount; i++)
+	{
+		if (portnum == ntohs(clientlist.fd_array[i]))
+		{
+			send(clientlist.fd_array[i], "You have been disconnected from server", 39, 0);
+			closesocket(clientlist.fd_array[i]);
+			socketCount--;
+		}
+	}
 }
