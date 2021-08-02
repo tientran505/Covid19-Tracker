@@ -38,7 +38,6 @@ string getWorldData() {
     return result;
 }
 
-
 void savefileJson()
 {
     // current date/time based on current system
