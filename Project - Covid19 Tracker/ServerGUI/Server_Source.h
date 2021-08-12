@@ -21,6 +21,6 @@ using namespace std;
 
 using namespace std;
 
-
+SOCKET createSocket(string IP, int portNum);
 #endif // !_SERVER_SOURCE_H_
 

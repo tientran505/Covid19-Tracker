@@ -1,0 +1,10 @@
+﻿  MyForm_Server.cpp
+  Server_Source.cpp
+E:\HCMUS\Sem 3\Computer Networking\MMT - Project\Covid19-Tracker\Project - Covid19 Tracker\ServerGUI\Server_Source.cpp(238,9): warning C4101: 'readfds': unreferenced local variable
+E:\HCMUS\Sem 3\Computer Networking\MMT - Project\Covid19-Tracker\Project - Covid19 Tracker\ServerGUI\Server_Source.cpp(235,7): warning C4101: 'buffer': unreferenced local variable
+  ThirdPartyData.cpp
+E:\HCMUS\Sem 3\Computer Networking\MMT - Project\Covid19-Tracker\Project - Covid19 Tracker\ServerGUI\ThirdPartyData.cpp(46,15): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  .NETFramework,Version=v4.6.1.AssemblyAttributes.cpp
+  Generating Code...
+  MyForm_Server.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  ServerGUI.vcxproj -> E:\HCMUS\Sem 3\Computer Networking\MMT - Project\Covid19-Tracker\Project - Covid19 Tracker\x64\Release\ServerGUI.exe

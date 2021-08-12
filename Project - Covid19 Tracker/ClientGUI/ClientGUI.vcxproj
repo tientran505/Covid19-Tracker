@@ -137,6 +137,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="LoginFrom_Client.af.resx">
+      <DependentUpon>LoginFrom_Client.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginFrom_Client.resx">
       <DependentUpon>LoginFrom_Client.h</DependentUpon>
     </EmbeddedResource>

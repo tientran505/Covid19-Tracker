@@ -32,8 +32,6 @@ int main()
 	// set of socket 
 	fd_set readfds;
 
-	const char* message = "hello";
-
 	int max_clients = 30;
 	SOCKET clientSocket[30];
 
@@ -72,6 +70,7 @@ int main()
 		cout << "Listen";
 		exit(EXIT_FAILURE);
 	}
+	 
 
 	while (true)
 	{
@@ -216,24 +215,12 @@ int main()
 	
 	
 
-	//shutdown all client
-	fd_set copy = master;
-	int socketCount = select(0, &copy, nullptr, nullptr, nullptr);
-	for (int i = 0; i < socketCount; i++)
-	{
-		SOCKET sock = copy.fd_array[i];
-		int iResult = shutdown(sock, SD_SEND);
-		if (iResult == SOCKET_ERROR)
-		{
-			cout << "Shutdown failed" << WSAGetLastError();
-			closesocket(sock);
-			return 1;
-		}
-	}
+	
 
 	WSACleanup();
 	closesocket(master);
 
+	
 	return 0;
 }
 
@@ -307,18 +294,6 @@ SOCKET createSocket(string IP, int portNum)
 	return master;
 }
 
-void savefileJson()
-{
-	// current date/time based on current system
-	time_t now = time(0);
-
-	tm* ltm = localtime(&now);
-
-	string savefileName;
-	savefileName = to_string(ltm->tm_mday) + "-" + to_string(1 + ltm->tm_mon) + "-" + to_string(1900+ltm->tm_year)+".txt";
-	fstream fileSave(savefileName, ios_base::out);
-	fileSave << getWorldData();
-}
 
 //withdraw an account
 void eraseAccount(string inputname)
@@ -437,7 +412,7 @@ bool checkPass(std::string inputname, std::string passkey)
 void SaveinUserfile(std::string inputname, std::string passkey)
 {
 	std::fstream fileUsers("Account.txt", std::ios_base::out | std::ios_base::app);
-	fileUsers << endl << inputname << "," << passkey;
+	fileUsers << inputname << "," << passkey << endl;
 	fileUsers.close();
 }
 

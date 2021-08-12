@@ -18,6 +18,7 @@
 
 using namespace std;
 
+void savefileJson();
 string getWorldData();
 SOCKET createSocket(string IP, int portNum);
 bool checkExistedUsername(std::string inputname);

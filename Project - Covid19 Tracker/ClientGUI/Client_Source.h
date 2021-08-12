@@ -9,7 +9,7 @@
 #include <string>
 #include <msclr/marshal_cppstd.h>
 #include <fstream>
-
+#include <sstream>
 #pragma comment (lib, "ws2_32.lib")
 
 using namespace std;
@@ -19,8 +19,8 @@ static int portNum = 2;
 
 SOCKET createSocket(string IPNum, int Port);
 bool canCreateSocket(string IPNum, int& Port);
-static SOCKET clientSocket;
+//static SOCKET clientSocket;
+
 bool checkLogin(string username, string pass);
-static int a = 3;
 
 #endif // !_CLIENT_H_

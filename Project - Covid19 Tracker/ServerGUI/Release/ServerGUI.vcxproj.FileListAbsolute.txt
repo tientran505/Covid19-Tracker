@@ -1,0 +1,2 @@
+E:\HCMUS\Sem 3\Computer Networking\MMT - Project\Covid19-Tracker\Project - Covid19 Tracker\ServerGUI\Release\ServerGUI.MyForm_Server.resources
+E:\HCMUS\Sem 3\Computer Networking\MMT - Project\Covid19-Tracker\Project - Covid19 Tracker\ServerGUI\Release\ServerGUI.vcxproj.GenerateResource.cache
